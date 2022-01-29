@@ -13,7 +13,7 @@ def checkStems(inPaths):
 
 # LOAD AUDIOS
 def loadAudio(inPath, inConfig="mono"):
-    print("---------")
+    print("------------------")
     print("Añadiendo track...")
 
     track = []

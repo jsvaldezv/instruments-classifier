@@ -3,9 +3,11 @@ import sys
 import pickle
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+import pandas as pd
 # UTILITIES
 import Utilities.DropAudio as dropAudio
 import Utilities.LoadAudio as load
+import Utilities.Descriptors as descriptors
 
 # MAIN CLASS
 class Main(QMainWindow, QWidget):
@@ -20,7 +22,7 @@ class Main(QMainWindow, QWidget):
         self.resize(self.globalWidth, self.globalHeight)
 
         # GLOBAL DATA
-        self.track = []
+        self.samples = []
         self.sr = []
 
         # CREAR INTERFAZ
@@ -49,15 +51,73 @@ class Main(QMainWindow, QWidget):
 
     def makePrediction(self):
         self.loadAudio()
-        self.getData()
+
+        data = self.getData()
+        resul = self.predict(data)
+        
+        self.interpret(resul)
 
     def loadAudio(self):
         path = QListWidgetItem(self.box.item(0))
         if path.text():
-            self.track, self.sr = load.loadAudio(path.text(), inConfig="mono")
+            self.samples, self.sr = load.loadAudio(path.text(), inConfig="mono")
 
     def getData(self):
+        print("------------------")
+        print("Obteniendo data...")
+        # IN FREQUENCY DOMAIN
+        descriptorsData = []
+        descriptorsLabels = ['Centroid_Freq', 'Spread_Freq', 'Peak_Freq', 'Centroid_Time', 'Slope', 'MFCC_1', 'MFCC_2', 'MFCC_3', 'MFCC_4', 'MFCC_5', 'MFCC_6', 'MFCC_7', 'MFCC_8', 'MFCC_9', 'MFCC_10', 'MFCC_11', 'MFCC_12', 'MFCC_13']
+        spectrum = descriptors.getSpectrum(self.samples)
+        frequency = descriptors.getFrequency(self.samples, self.sr)
+
+        descriptorsData.append(descriptors.getCentroid(frequency, spectrum))
+        descriptorsData.append(descriptors.getSpread(frequency, spectrum))
+        descriptorsData.append(descriptors.getPeak(frequency, spectrum))
+
+        time = descriptors.getVectorTime(self.samples, self.sr)
+        descriptorsData.append(descriptors.getCentroid(time, self.samples))
+        descriptorsData.append(descriptors.getSlope(self.samples, self.sr))
+        for mfcc in descriptors.getMFCC(self.samples, self.sr):
+            descriptorsData.append(mfcc.mean())
+
+        datos = pd.DataFrame([descriptorsData], columns=descriptorsLabels)
+        return datos
+
+    def predict(self, inData):
+        print("------------------")
+        print("Prediciendo...")
+        model = pickle.load(open('InstrumentsClassifier/Models/randomForest_Model.sav', 'rb'))
+        result = model.predict(inData)
         
+        return result
+
+    def interpret(self, inResul):
+        print("------------------")
+        print("Interpretando...")
+
+        resul = inResul[0]
+
+        if resul == 1:
+            print("El modelo predijo un kick")
+
+        elif resul == 2:
+            print("El modelo predijo un snare")
+        
+        elif resul == 3:
+            print("El modelo predijo un hihat")
+
+        elif resul == 4:
+            print("El modelo predijo una guitarra")
+
+        elif resul == 5:
+            print("El modelo predijo un bass")
+                
+        elif resul == 6:
+            print("El modelo predijo una voz")
+
+        else:
+            print("Error")
 
 # EXECUTATE PROGRAM
 app = QApplication(sys.argv)
@@ -65,6 +125,3 @@ demo = Main()
 demo.show()
 sys.exit(app.exec_())
 
-#model = pickle.load(open('Models/randomForest_Model.sav', 'rb'))
-#result = model.score(X_test, Y_test)
-#print(result)
