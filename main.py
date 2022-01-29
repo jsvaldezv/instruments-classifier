@@ -3,6 +3,7 @@ import sys
 import pickle
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from PyQt5 import QtCore
 import pandas as pd
 # UTILITIES
 import Utilities.DropAudio as dropAudio
@@ -18,7 +19,7 @@ class Main(QMainWindow, QWidget):
 
         # GLOBAL SIZE
         self.globalWidth = 600
-        self.globalHeight = 600
+        self.globalHeight = 260
         self.resize(self.globalWidth, self.globalHeight)
 
         # GLOBAL DATA
@@ -48,6 +49,16 @@ class Main(QMainWindow, QWidget):
         self.btnClean = QPushButton('Clean', self)
         self.btnClean.setGeometry(120, 130, 100, 50)
         self.btnClean.clicked.connect(lambda: self.box.clear())
+
+        # PREDICTION
+        self.title = QLabel(self)
+        self.title.setText("CARGA UN SONIDO PARA PREDECIR...")
+        self.title.setFont(QFont('Nixie One', 20))
+        self.title.setGeometry(int(self.globalWidth/2 - 190), 200, 380, 30)
+        self.title.setAlignment(QtCore.Qt.AlignCenter)
+
+    def printPrediction(self, inResul):
+        self.title.setText(inResul)
 
     def makePrediction(self):
         self.loadAudio()
@@ -96,28 +107,33 @@ class Main(QMainWindow, QWidget):
         print("------------------")
         print("Interpretando...")
 
-        resul = inResul[0]
+        inResul = inResul[0]
+        resul = ""
 
-        if resul == 1:
+        if inResul == 1:
             print("El modelo predijo un kick")
-
-        elif resul == 2:
+            resul = "Es un kick"
+        elif inResul == 2:
             print("El modelo predijo un snare")
-        
-        elif resul == 3:
+            resul = "Es un snare"
+        elif inResul == 3:
             print("El modelo predijo un hihat")
-
-        elif resul == 4:
+            resul = "Es un hihat"
+        elif inResul == 4:
             print("El modelo predijo una guitarra")
-
-        elif resul == 5:
+            resul = "Es una guitarra"
+        elif inResul == 5:
             print("El modelo predijo un bass")
-                
-        elif resul == 6:
+            resul = "Es un bass"
+        elif inResul == 6:
             print("El modelo predijo una voz")
-
+            resul = "Es una voz"
         else:
             print("Error")
+            resul = "Error"
+
+        self.printPrediction(resul)
+        self.box.clear()
 
 # EXECUTATE PROGRAM
 app = QApplication(sys.argv)
