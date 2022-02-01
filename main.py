@@ -29,6 +29,9 @@ class Main(QMainWindow, QWidget):
         # CREAR INTERFAZ
         self.createGUI()
 
+        # MODELO
+        self.model = pickle.load(open('InstrumentsClassifier/Models/randomForest_Model.sav', 'rb'))
+
     def createGUI(self):
         # TITLE
         self.title = QLabel(self)
@@ -98,8 +101,7 @@ class Main(QMainWindow, QWidget):
     def predict(self, inData):
         print("------------------")
         print("Prediciendo...")
-        model = pickle.load(open('InstrumentsClassifier/Models/randomForest_Model.sav', 'rb'))
-        result = model.predict(inData)
+        result = self.model.predict(inData)
         
         return result
 
