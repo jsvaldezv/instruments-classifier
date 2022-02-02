@@ -1,14 +1,20 @@
 # Instruments Classifier
 
-Instruments Classifier made with Python and Scikit Learn. First I collected kick, snare, hihat, guitar, basss and vocal audios, then I generated audio
-descriptors such as Centroid, Peak, Spread, MFCC in time and frequency domain. Later, I used all this info in order to train a random forest and be able to 
-generate a model in .sav. Finally I build a little prototype with the exported model with Python and PYQT5 in order to just drop an audio and be able to
-predict which instrument is the sound.
+Instruments Classifier made with Python and Scikit Learn. First I collected audios of the instruments I wanted to the model to be able to predict, then I 
+generated audio descriptors such as Centroid, Peak, Spread, MFCC in time and frequency domain. Later, I used all this info in order to train a random forest
+and be able to generate a model in .sav. Finally I build a little prototype with the exported model with Python and PYQT5 in order to just drop an audio and 
+be able to predict which instrument is the sound.
 
-### Installation
+Note: The training was performed in Jupyter lab and the prototype developed in Visual Studio Code but you should be able to run the code with spider, jupyter, pycharm or console itself as well.
 
-Note: The training was performed in Jupyter lab and the prototype in Visual Studio Code but you should be able to run the code with spider, jupyter, pycharm or 
-console itself as well.
+### Instruments the model can predict (at the moment)
+
+* Kick
+* Snare
+* HiHat
+* Guitar
+* Bass
+* Vocal
 
 ### Dependencies
 
@@ -31,6 +37,12 @@ Note: I recommend install all Anaconda package in order to have a good python en
   
 * Matplotlib from https://matplotlib.org/ for audio and data visualization
   - Python formula: ```pip install matplotlib```
+
+* Pandas from https://pandas.pydata.org/ for data manipulation
+  - Python formula: ```pip install pandas```
+
+* Seaborn from https://seaborn.pydata.org/ for data visualization
+  - Python formula: ```pip install seaborn```
 
 ### Follow me
 
