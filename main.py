@@ -79,19 +79,28 @@ class Main(QMainWindow, QWidget):
     def getData(self):
         print("------------------")
         print("Obteniendo data...")
-        # IN FREQUENCY DOMAIN
+        
         descriptorsData = []
-        descriptorsLabels = ['Centroid_Freq', 'Spread_Freq', 'Peak_Freq', 'Centroid_Time', 'Slope', 'MFCC_1', 'MFCC_2', 'MFCC_3', 'MFCC_4', 'MFCC_5', 'MFCC_6', 'MFCC_7', 'MFCC_8', 'MFCC_9', 'MFCC_10', 'MFCC_11', 'MFCC_12', 'MFCC_13']
+        descriptorsLabels = ['Centroid_Freq', 'Spread_Freq', 'Peak_Freq', 'RollOff_Time', 
+                             'Centroid_Time', 'Spread_Time', 'Peak_Time', 'RollOff_Freq',
+                             'MFCC_1', 'MFCC_2', 'MFCC_3', 'MFCC_4', 'MFCC_5', 'MFCC_6', 'MFCC_7', 'MFCC_8', 'MFCC_9', 
+                             'MFCC_10', 'MFCC_11', 'MFCC_12', 'MFCC_13']
+
+        # IN FREQUENCY DOMAIN
         spectrum = descriptors.getSpectrum(self.samples)
         frequency = descriptors.getFrequency(self.samples, self.sr)
-
         descriptorsData.append(descriptors.getCentroid(frequency, spectrum))
         descriptorsData.append(descriptors.getSpread(frequency, spectrum))
         descriptorsData.append(descriptors.getPeak(frequency, spectrum))
+        descriptorsData.append(descriptors.getRollOff(frequency, spectrum))
 
+        # IN TIME DOMAIN
         time = descriptors.getVectorTime(self.samples, self.sr)
         descriptorsData.append(descriptors.getCentroid(time, self.samples))
-        descriptorsData.append(descriptors.getSlope(self.samples, self.sr))
+        descriptorsData.append(descriptors.getSpread(time, self.samples))
+        descriptorsData.append(descriptors.getPeak(time, self.samples))
+        descriptorsData.append(descriptors.getRollOff(time, self.samples))
+        
         for mfcc in descriptors.getMFCC(self.samples, self.sr):
             descriptorsData.append(mfcc.mean())
 

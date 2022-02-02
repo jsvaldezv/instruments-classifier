@@ -32,3 +32,14 @@ def getSlope(inSamples, inSampleRate):
 def getMFCC(inSamples, inSampleRate):
     mfccValue = librosa.feature.mfcc(inSamples, sr=inSampleRate, n_mfcc=13)
     return mfccValue
+
+def getRollOff(inX, inY, treshold = 0.95):
+    cumsum = np.cumsum(inY)
+    cont = 0
+    rolloff = 0
+    for accum in cumsum:
+        if accum > (cumsum[-1] * treshold):
+            rolloff = inX[cont]
+            break
+        cont += 1
+    return rolloff
