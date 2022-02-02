@@ -1,2 +1,4 @@
 .DS_Store
 .ipynb_checkpoints/Drums_Classification-checkpoint.ipynb
+.ipynb_checkpoints/Instruments_Classifier-checkpoint.ipynb
+__pycache__
