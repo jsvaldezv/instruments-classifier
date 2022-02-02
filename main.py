@@ -81,8 +81,8 @@ class Main(QMainWindow, QWidget):
         print("Obteniendo data...")
         
         descriptorsData = []
-        descriptorsLabels = ['Centroid_Freq', 'Spread_Freq', 'Peak_Freq', 'RollOff_Time', 
-                             'Centroid_Time', 'Spread_Time', 'Peak_Time', 'RollOff_Freq',
+        descriptorsLabels = ['Centroid_Freq', 'Spread_Freq', 'Peak_Freq', 'RollOff_Freq', 
+                             'Centroid_Time', 'Spread_Time', 'Peak_Time', 'RollOff_Time',
                              'MFCC_1', 'MFCC_2', 'MFCC_3', 'MFCC_4', 'MFCC_5', 'MFCC_6', 'MFCC_7', 'MFCC_8', 'MFCC_9', 
                              'MFCC_10', 'MFCC_11', 'MFCC_12', 'MFCC_13']
 
