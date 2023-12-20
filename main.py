@@ -1,63 +1,52 @@
-# LIBRARIES
 import sys
 import pickle
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import QtCore
 import pandas as pd
-# UTILITIES
+
 import Utilities.DropAudio as dropAudio
 import Utilities.LoadAudio as load
 import Utilities.Descriptors as descriptors
 
-# MAIN CLASS
-class Main(QMainWindow, QWidget):
 
-    # CREATE AND SET MIXER
+class Main(QMainWindow, QWidget):
     def __init__(self):
         super().__init__()
 
-        # GLOBAL SIZE
         self.globalWidth = 600
         self.globalHeight = 260
         self.resize(self.globalWidth, self.globalHeight)
 
-        # GLOBAL DATA
         self.samples = []
         self.sr = []
 
-        # CREAR INTERFAZ
         self.createGUI()
 
-        # MODELO
-        self.model = pickle.load(open('Models/randomForest_Model.sav', 'rb'))
+        # Model
+        self.model = pickle.load(open("Models/randomForest_Model.sav", "rb"))
 
     def createGUI(self):
-        # TITLE
         self.title = QLabel(self)
-        self.title.setText("CLASIFICADOR DE INSTRUMENTOS")
-        self.title.setFont(QFont('Nixie One', 20))
-        self.title.setGeometry(int(self.globalWidth/2 - 170), 10, 340, 30)
-        
-        # INSTRUMENT BOX
-        self.box = dropAudio.ListboxWidget(self)
-        self.box.setBounds(int(self.globalWidth/2 - 30), 90, 200, 50)
+        self.title.setText("Instruments classifier")
+        self.title.setFont(QFont("Nixie One", 20))
+        self.title.setGeometry(int(self.globalWidth / 2 - 170), 10, 340, 30)
 
-        # LOAD AUDIOS
-        self.btnPredict = QPushButton('Predict', self)
+        self.box = dropAudio.ListboxWidget(self)
+        self.box.setBounds(int(self.globalWidth / 2 - 30), 90, 200, 50)
+
+        self.btnPredict = QPushButton("Predict", self)
         self.btnPredict.setGeometry(120, 70, 100, 50)
         self.btnPredict.clicked.connect(lambda: self.makePrediction())
 
-        # DELETE AUDIOS
-        self.btnClean = QPushButton('Clean', self)
+        self.btnClean = QPushButton("Clean", self)
         self.btnClean.setGeometry(120, 130, 100, 50)
         self.btnClean.clicked.connect(lambda: self.box.clear())
 
-        # PREDICTION
         self.title = QLabel(self)
-        self.title.setText("CARGA UN SONIDO PARA PREDECIR...")
-        self.title.setFont(QFont('Nixie One', 20))
-        self.title.setGeometry(int(self.globalWidth/2 - 190), 200, 380, 30)
+        self.title.setText("Load a sample to predict...")
+        self.title.setFont(QFont("Nixie One", 20))
+        self.title.setGeometry(int(self.globalWidth / 2 - 190), 200, 380, 30)
         self.title.setAlignment(QtCore.Qt.AlignCenter)
 
     def printPrediction(self, inResul):
@@ -68,7 +57,7 @@ class Main(QMainWindow, QWidget):
 
         data = self.getData()
         resul = self.predict(data)
-        
+
         self.interpret(resul)
 
     def loadAudio(self):
@@ -78,15 +67,34 @@ class Main(QMainWindow, QWidget):
 
     def getData(self):
         print("------------------")
-        print("Obteniendo data...")
-        
-        descriptorsData = []
-        descriptorsLabels = ['Centroid_Freq', 'Spread_Freq', 'Peak_Freq', 'RollOff_Freq', 
-                             'Centroid_Time', 'Spread_Time', 'Peak_Time', 'RollOff_Time',
-                             'MFCC_1', 'MFCC_2', 'MFCC_3', 'MFCC_4', 'MFCC_5', 'MFCC_6', 'MFCC_7', 'MFCC_8', 'MFCC_9', 
-                             'MFCC_10', 'MFCC_11', 'MFCC_12', 'MFCC_13']
+        print("Getting data...")
 
-        # IN FREQUENCY DOMAIN
+        descriptorsData = []
+        descriptorsLabels = [
+            "Centroid_Freq",
+            "Spread_Freq",
+            "Peak_Freq",
+            "RollOff_Freq",
+            "Centroid_Time",
+            "Spread_Time",
+            "Peak_Time",
+            "RollOff_Time",
+            "MFCC_1",
+            "MFCC_2",
+            "MFCC_3",
+            "MFCC_4",
+            "MFCC_5",
+            "MFCC_6",
+            "MFCC_7",
+            "MFCC_8",
+            "MFCC_9",
+            "MFCC_10",
+            "MFCC_11",
+            "MFCC_12",
+            "MFCC_13",
+        ]
+
+        # Frequency domain
         spectrum = descriptors.getSpectrum(self.samples)
         frequency = descriptors.getFrequency(self.samples, self.sr)
         descriptorsData.append(descriptors.getCentroid(frequency, spectrum))
@@ -94,13 +102,13 @@ class Main(QMainWindow, QWidget):
         descriptorsData.append(descriptors.getPeak(frequency, spectrum))
         descriptorsData.append(descriptors.getRollOff(frequency, spectrum))
 
-        # IN TIME DOMAIN
+        # Time domain
         time = descriptors.getVectorTime(self.samples, self.sr)
         descriptorsData.append(descriptors.getCentroid(time, self.samples))
         descriptorsData.append(descriptors.getSpread(time, self.samples))
         descriptorsData.append(descriptors.getPeak(time, self.samples))
         descriptorsData.append(descriptors.getRollOff(time, self.samples))
-        
+
         for mfcc in descriptors.getMFCC(self.samples, self.sr):
             descriptorsData.append(mfcc.mean())
 
@@ -109,36 +117,36 @@ class Main(QMainWindow, QWidget):
 
     def predict(self, inData):
         print("------------------")
-        print("Prediciendo...")
+        print("Predicting...")
         result = self.model.predict(inData)
-        
+
         return result
 
     def interpret(self, inResul):
         print("------------------")
-        print("Interpretando...")
+        print("Thinking...")
 
         inResul = inResul[0]
         resul = ""
 
         if inResul == 1:
-            print("El modelo predijo un kick")
-            resul = "Es un kick"
+            print("The mode predicted a kick")
+            resul = "It is a kick"
         elif inResul == 2:
-            print("El modelo predijo un snare")
-            resul = "Es un snare"
+            print("The mode predicted a snare")
+            resul = "It is a snare"
         elif inResul == 3:
-            print("El modelo predijo un hihat")
-            resul = "Es un hihat"
+            print("The mode predicted a hihat")
+            resul = "It is a hihat"
         elif inResul == 4:
-            print("El modelo predijo una guitarra")
-            resul = "Es una guitarra"
+            print("The mode predicted a guitar")
+            resul = "It is a guitar"
         elif inResul == 5:
-            print("El modelo predijo un bass")
-            resul = "Es un bass"
+            print("The mode predicted a bass")
+            resul = "It is a bass"
         elif inResul == 6:
-            print("El modelo predijo una voz")
-            resul = "Es una voz"
+            print("The mode predicted a voz")
+            resul = "It is a vox"
         else:
             print("Error")
             resul = "Error"
@@ -146,9 +154,8 @@ class Main(QMainWindow, QWidget):
         self.printPrediction(resul)
         self.box.clear()
 
-# EXECUTATE PROGRAM
+
 app = QApplication(sys.argv)
 demo = Main()
 demo.show()
 sys.exit(app.exec_())
-

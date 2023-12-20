@@ -1,15 +1,17 @@
 import soundfile as sf
 from soundfile import SoundFile
 
+
 # CHECAR MAYOR LONGITUD DE TODOS LOS AUDIOS
 def checkStems(inPaths):
     mayor = 0
-    #for path in inPaths:
+    # for path in inPaths:
     audio, sr = sf.read(inPaths)
     if len(audio) > mayor:
         mayor = len(audio)
-        
+
     return mayor
+
 
 # LOAD AUDIOS
 def loadAudio(inPath, inConfig="mono"):
@@ -20,7 +22,7 @@ def loadAudio(inPath, inConfig="mono"):
     sampleRate = 0
 
     audio = SoundFile(inPath)
-    
+
     if inConfig == "mono":
         if audio.channels == 1:
             samples, sr = sf.read(inPath)
@@ -29,7 +31,7 @@ def loadAudio(inPath, inConfig="mono"):
 
         else:
             samples, sr = sf.read(inPath)
-            track = samples[:,0]
+            track = samples[:, 0]
             sampleRate = sr
 
     elif inConfig == "stereo":

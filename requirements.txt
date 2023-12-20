@@ -6,3 +6,4 @@ scipy==1.*
 matplotlib==3.*
 pandas==2.*
 seaborn==0.*
+black==23.*
