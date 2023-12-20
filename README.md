@@ -20,8 +20,6 @@ Note: The training was performed in Jupyter lab and the prototype developed in V
 
 ## Local running
 
-With Python 3.10+ for `|` annotations
-
 ### 1. Create venv
 ```bash
 python3 -m venv venv
