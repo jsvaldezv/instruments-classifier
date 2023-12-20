@@ -18,7 +18,7 @@ Note: The training was performed in Jupyter lab and the prototype developed in V
 * Bass
 * Vocal
 
-## Local installation
+## Local running
 
 With Python 3.10+ for `|` annotations
 
