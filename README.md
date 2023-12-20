@@ -18,30 +18,22 @@ Note: The training was performed in Jupyter lab and the prototype developed in V
 * Bass
 * Vocal
 
-### Dependencies
+## Local installation
 
-Note: I recommend install all Anaconda package in order to have a good python environment.
+With Python 3.10+ for `|` annotations
 
-* Scikit Learn from https://scikit-learn.org/stable/# for machine learning
-  - Python formula: ```pip install -U scikit-learn```
-  
-* PyQT5 from https://pypi.org/project/PyQt5/ for GUI
-  - Python formula: ```pip install PyQt5```
-  
-* Soundfile from https://pypi.org/project/SoundFile/ for reading and writing audio
-  - Python formula: ```pip install soundfile``` 
+### 1. Create venv
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-* Librosa from https://librosa.org/doc/latest/index.html for audio descriptors
-  - Python formula: ```pip install librosa```
+### 2. Install dependencies
+```bash
+(venv) pip install -r requirements.txt
+```
 
-* Scipy from https://scipy.org/ for audio descriptors
-  - Python formula: ```python -m pip install --user scipy```
-  
-* Matplotlib from https://matplotlib.org/ for audio and data visualization
-  - Python formula: ```pip install matplotlib```
-
-* Pandas from https://pandas.pydata.org/ for data manipulation
-  - Python formula: ```pip install pandas```
-
-* Seaborn from https://seaborn.pydata.org/ for data visualization
-  - Python formula: ```pip install seaborn```
+### 3. Run main file
+```bash
+(venv) python main.py
+```

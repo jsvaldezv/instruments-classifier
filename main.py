@@ -30,7 +30,7 @@ class Main(QMainWindow, QWidget):
         self.createGUI()
 
         # MODELO
-        self.model = pickle.load(open('InstrumentsClassifier/Models/randomForest_Model.sav', 'rb'))
+        self.model = pickle.load(open('Models/randomForest_Model.sav', 'rb'))
 
     def createGUI(self):
         # TITLE

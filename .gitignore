@@ -3,3 +3,5 @@
 .ipynb_checkpoints/Instruments_Classifier-checkpoint.ipynb
 __pycache__
 Utilities/__pycache__/
+venv
+.idea/
