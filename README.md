@@ -1,9 +1,5 @@
 # Instruments Classifier
 
-By:
-- Jesús Salvador Valdez Vázquez
-- Jacques Martell Villalpando
-
 <img width="598" alt="classifier" src="https://user-images.githubusercontent.com/47612276/153321732-26756fec-e32b-4289-ac6c-3c5143f435bd.png">
 
 Instruments Classifier made with Python and Scikit Learn. First I collected audios of the instruments I wanted to the model to be able to predict, then I 
@@ -49,15 +45,3 @@ Note: I recommend install all Anaconda package in order to have a good python en
 
 * Seaborn from https://seaborn.pydata.org/ for data visualization
   - Python formula: ```pip install seaborn```
-
-### Follow me
-
-- Twitter: https://twitter.com/anticode_
-
-## Follow my audio plug-ins company Ear Candy Technologies: 
-
-- Facebook: https://www.facebook.com/earcandytechnologies 
-- Twitter: https://twitter.com/EarCandyTech 
-- Instagram: https://www.instagram.com/earcandytechnology/ 
-- Youtube: https://www.youtube.com/channel/UCnmhLuxpV3PftGI2YR5kpFA 
-- Discord Server: https://discord.gg/44d6SEmw
