@@ -1,22 +1,37 @@
-# Instruments Classifier
+# Instrument Classifier
 
 <img width="598" alt="classifier" src="https://user-images.githubusercontent.com/47612276/153321732-26756fec-e32b-4289-ac6c-3c5143f435bd.png">
 
-Instruments Classifier made with Python and Scikit Learn. First I collected audios of the instruments I wanted to the model to be able to predict, then I 
-generated audio descriptors such as Centroid, Peak, Spread, MFCC in time and frequency domain. Later, I used all this info in order to train a random forest
-and be able to generate a model in .sav. Finally I build a little prototype with the exported model with Python and PYQT5 in order to just drop an audio and 
-be able to predict which instrument is the sound.
+This project is an instrument classifier developed in Python using Scikit-learn and PyQt5. The model is capable of identifying various musical instruments from audio samples based on extracted audio descriptors.
 
-Note: The training was performed in Jupyter lab and the prototype developed in Visual Studio Code but you should be able to run the code with spider, jupyter, pycharm or console itself as well.
+🎧 Workflow Overview:
 
-### Instruments the model can predict (at the moment)
+- Audio Dataset Collection: Gathered recordings for six instrument classes.
+- Feature Extraction: Computed audio descriptors such as:
+    - Spectral Centroid
+    - Spectral Peak
+    - Spectral Spread
+    - MFCC (in time and frequency domain)
+- Model Training: Trained a Random Forest classifier using Scikit-learn.
+- Model Export: Saved the trained model as a .sav file.
+- Prototype Interface: Built with PyQt5, allowing users to drag and drop an audio file to classify the instrument.
 
-* Kick
-* Snare
-* HiHat
-* Guitar
-* Bass
-* Vocal
+🥁 Instruments the Model Can Identify:
+
+- Kick
+- Snare
+- Hi-Hat
+- Guitar
+- Bass
+- Vocal
+
+🛠️ Development Notes:
+
+- Model training was done in JupyterLab.
+- UI prototype was built in Visual Studio Code.
+- Code is compatible with Spyder, Jupyter, PyCharm, or the Python console.
+
+This project aims to make machine learning accessible for music classification and prototyping.
 
 ## Local running
 
